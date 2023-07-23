@@ -1,6 +1,7 @@
 ﻿using AdvertisementApp.DataAccess.Configuraitons;
 using AdvertisementApp.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,17 @@ namespace AdvertisementApp.DataAccess.Contexts
     {
         public AdvetisementContext(DbContextOptions<AdvetisementContext> options) : base(options)
         {
-            
+
+        }
+        public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AdvetisementContext>
+        {
+            public AdvetisementContext CreateDbContext(string[] args)
+            {
+                var builder = new DbContextOptionsBuilder<AdvetisementContext>();
+                var connectionString = "Server = GODSWHIP\\SQLEXPRESS; Database = AdvertisementDb; Trusted_Connection = True; TrustServerCertificate=True\r\n";
+                builder.UseSqlServer(connectionString);
+                return new AdvetisementContext(builder.Options);
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) // oluşturduğumuz configuraitonları burada tanıtmamız gerekiyor bu yüzden onmodelcreatng metodunu overide ettik
