@@ -21,7 +21,7 @@ namespace AdvertisementApp.DataAccess.Contexts
             public AdvetisementContext CreateDbContext(string[] args)
             {
                 var builder = new DbContextOptionsBuilder<AdvetisementContext>();
-                var connectionString = "Server = GODSWHIP\\SQLEXPRESS; Database = AdvertisementDb; Trusted_Connection = True; TrustServerCertificate=True\r\n";
+                var connectionString = "Server = GODSWHIP\\SQLEXPRESS; Database = AdvertisementDb; Trusted_Connection = True; TrustServerCertificate=True";
                 builder.UseSqlServer(connectionString);
                 return new AdvetisementContext(builder.Options);
             }
