@@ -2,7 +2,7 @@
 using AdvertisementApp.Business.Interfaces;
 using AdvertisementApp.DataAccess.UnitOfWork;
 using AdvertisementApp.Dto.Interfaces;
-using AdvertisementApp.Dto.ProvidedServiceDtos;
+using AdvertisementApp.Dto;
 using AdvertisementApp.Entities;
 using AdvertisimentApp;
 using AdvertisimentApp.Common;

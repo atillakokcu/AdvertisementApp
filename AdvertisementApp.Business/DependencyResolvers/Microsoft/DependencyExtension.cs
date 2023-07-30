@@ -4,7 +4,7 @@ using AdvertisementApp.Business.Services;
 using AdvertisementApp.Business.ValidationRules;
 using AdvertisementApp.DataAccess.Contexts;
 using AdvertisementApp.DataAccess.UnitOfWork;
-using AdvertisementApp.Dto.ProvidedServiceDtos;
+using AdvertisementApp.Dto;
 using AutoMapper;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
