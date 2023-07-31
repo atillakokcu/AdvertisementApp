@@ -1,4 +1,5 @@
 ﻿using AdvertisementApp.Business.Interfaces;
+using AdvertisementApp.Business.Services;
 using AdvertisementApp.UI.Extensions;
 using AdvertisementApp.UI.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,14 @@ namespace AdvertisementApp.UI.Controllers
     public class HomeController : Controller
     {
         private readonly IProvidedServiceService _providedServiceService;
+        private readonly IAdvertisementService _advertisingService;
 
-        public HomeController(IProvidedServiceService providedServiceService)
+       
+
+        public HomeController(IProvidedServiceService providedServiceService, IAdvertisementService advertisingService)
         {
             _providedServiceService = providedServiceService;
+            _advertisingService = advertisingService;
         }
 
 
@@ -23,9 +28,12 @@ namespace AdvertisementApp.UI.Controllers
 
         }
 
-        public IActionResult HumanResorce()
+        public async Task<IActionResult> HumanResorce()
         {
-            return View();
+            var response = await _advertisingService.GetActiveAsync();
+
+
+            return this.ResponseView(response);
 
         }
 
