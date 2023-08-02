@@ -34,6 +34,8 @@ namespace AdvertisementApp.Business.DependencyResolvers.Microsoft
             {
                 opt.AddProfile(new ProvidedServiceProfile());
                 opt.AddProfile(new AdvertisementProfile());
+                opt.AddProfile(new AppUserProfile());
+                opt.AddProfile(new GenderProfile());
             });
 
             var mapper = mapperConfiguration.CreateMapper();
@@ -47,8 +49,16 @@ namespace AdvertisementApp.Business.DependencyResolvers.Microsoft
             services.AddTransient<IValidator<AdvertisementUpdateDto>, AdvertisementUpdateDtoValidator>();
             services.AddTransient<IValidator<AdvertisementCreateDto>, AdvertisementCreateDtoValidator>();
 
+            services.AddTransient<IValidator<AppUserCreateDto>, AppUserCreateDtoValidator>();
+            services.AddTransient<IValidator<AppUserUpdateDto>, AppUserUpdateDtoValidator>();
+
+            services.AddTransient<IValidator<GenderCreateDto>, GenderCreateDtoValidator>();
+            services.AddTransient<IValidator<GenderUpdateDto>, GenderUpdateDtoValidator>();
+
             services.AddScoped<IProvidedServiceService, ProvidedServiceService>();
             services.AddScoped<IAdvertisementService, AdvertisementService>();
+            services.AddScoped<IAppUserService, AppUserService>();
+            services.AddScoped<IGenderService, GenderService>();
 
             services.AddDbContext<AdvetisementContext>(options =>
 options.UseSqlServer(configuration.GetConnectionString("Server = GODSWHIP\\SQLEXPRESS; Database = AdvertisementDb; Trusted_Connection = True; TrustServerCertificate=True")));
