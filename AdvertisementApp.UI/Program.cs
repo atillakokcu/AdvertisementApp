@@ -6,6 +6,8 @@ using AdvertisementApp.Business.ValidationRules;
 using AdvertisementApp.DataAccess.Contexts;
 using AdvertisementApp.DataAccess.UnitOfWork;
 using AdvertisementApp.Dto;
+using AdvertisementApp.UI.Models;
+using AdvertisementApp.UI.ValidationRules;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDependencies(builder.Configuration);
+builder.Services.AddTransient<IValidator<UserCreateModel>, UserCreateModelValidator>();
 
 var app = builder.Build();
 
