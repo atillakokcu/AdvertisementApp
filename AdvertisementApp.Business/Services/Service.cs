@@ -44,6 +44,7 @@ namespace AdvertisementApp.Business.Services
             {
                 var createdEntitiy = _mapper.Map<T>(dto);
                await _uow.GetRepository<T>().CreateAsync(createdEntitiy);
+                await _uow.SaveChangesAsync();
                 return new Response<CreateDto>(ResponseType.Success,dto);
             }
             
@@ -78,6 +79,7 @@ namespace AdvertisementApp.Business.Services
                 return new Response(ResponseType.NotFount, $"{id} ye sahip data bulunamadı");
             }
             _uow.GetRepository<T>().Remove(data);
+            await _uow.SaveChangesAsync();
             return new Response(ResponseType.Success);
             
         }
@@ -94,6 +96,7 @@ namespace AdvertisementApp.Business.Services
                 }
                 var entity = _mapper.Map<T>(dto);
                 _uow.GetRepository<T>().Update(entity, unchangedData);
+                await _uow.SaveChangesAsync();
                 return new Response<UpdateDto>(ResponseType.Success, dto);
             }
 
