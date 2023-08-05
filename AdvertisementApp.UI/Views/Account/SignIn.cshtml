@@ -13,6 +13,12 @@
             <label>Şifre</label>
             <input type="password" asp-for="@Model.Password" class="form-control" />
         </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" asp-for="@Model.RememberMe " id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                Beni hatırla
+            </label>
+        </div>
         <br />
         <div class="mb-3 text-end">
             <button type="submit" class="btn btn-primary"> Giriş Yap</button>

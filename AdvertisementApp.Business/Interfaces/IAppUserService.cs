@@ -1,4 +1,5 @@
 ﻿using AdvertisementApp.Dto;
+using AdvertisementApp.Dto.AppRoleDtos;
 using AdvertisementApp.Entities;
 using AdvertisimentApp.Common;
 using System;
@@ -13,5 +14,7 @@ namespace AdvertisementApp.Business.Interfaces
     {
 
         Task<IResponse<AppUserCreateDto>> CreateWithRoleAsync(AppUserCreateDto dto, int roleId);
+        Task<IResponse<AppUserListDto>> CheckUserAsync(AppUserLoginDto dto);
+        Task<IResponse<List<AppRoleListDto>>> GetRolesByUserIdAsync(int userId);
     }
 }
