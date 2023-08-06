@@ -82,17 +82,17 @@ namespace AdvertisementApp.UI.Controllers
             var result = await _appUserService.CheckUserAsync(dto);
             if (result.ResponseType == ResponseType.Success)
             {
-              var roleResult= await _appUserService.GetRolesByUserIdAsync( result.Data.Id);
-                var claims = new List<Claim> {};
+                var roleResult = await _appUserService.GetRolesByUserIdAsync(result.Data.Id);
+                var claims = new List<Claim> { };
 
                 if (roleResult.ResponseType == ResponseType.Success)
                 {
                     foreach (var role in roleResult.Data)
                     {
-                        claims.Add(new Claim(ClaimTypes.Role, role.Definition));
+                        claims.Add(new Claim(ClaimTypes.Role, role.Defination));
                     }
                 }
-                claims.Add(new Claim(ClaimTypes.NameIdentifier,result.Data.Id.ToString()));
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, result.Data.Id.ToString()));
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var authproperties = new AuthenticationProperties
                 {
@@ -106,12 +106,19 @@ namespace AdvertisementApp.UI.Controllers
                     authproperties);
 
                 return RedirectToAction("Index", "Home");
-                
+
 
             }
 
-            ModelState.AddModelError("", result.Message);
+            ModelState.AddModelError("Kullanıcı adı veya Şifre hatalı", result.Message);
             return View(dto);
+        }
+
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
         }
 
     }
