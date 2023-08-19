@@ -2,9 +2,55 @@
 @{
     Layout = "_Layout";
 }
-<form asp-action="Send" asp-controller="Advertisement" method="post">
-    <input type="hidden" asp-for="@Model.AdvertismentId" />
-    <div class="mb-3">
-        
-    </div>
+<form class="w-75 mx-auto p-3" asp-action="Send" asp-controller="Advertisement" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="@Model.AdvertisementId" />
+    <input type="hidden" asp-for="@Model.AppUserId" />
+    @if (ViewBag.Gender == (int)GenderType.Erkek)
+    {
+        <div class="mb-3">
+            <label>Askerlik Durumu</label>
+            <select onchange="setInpytVisibility()" asp-for="@Model.MilitarySatusId" asp-items="@ViewBag.MilitaryStatus" class="form-select">
+            </select>
+            <div id="dateDiv" class="mb-3" style="display:none">
+                <label>Tecil Tarihi</label>
+                <input type="date" asp-for="@Model.EndDate" class="form-control" />
+            </div>
+        </div>
+    }
+    else
+    {
+        <input type="hidden" asp-for="@Model.MilitarySatusId" value="@((int)MilitaryStatusType.Muaf)" />
+    }
+   <div class="mb-3">
+       <lable>İş deneyimiz (yıl olarak)</lable>
+        <input type="number" asp-for="@Model.WorkExperience" class="form-control" />
+   </div> 
+   <div class="mb-3">
+       <label>CV:</label>
+       <input type="file" asp-for="@Model.CvFile" class="form-control"/>
+
+   </div>
+   <div class="mb-3">
+       <button type="submit" class="btn btn-success">Keydet</button>
+   </div>
+   <div asp-validation-summary="All" class="text-danger">
+
+   </div>
 </form>
+
+@section script {
+    <script>
+        function setInpytVisibility(){
+            var selectElement = document.getElementById("MilitarySatusId");
+            var militaryStatusId = selectElement.value;
+
+            var dateDivElement = document.getElementById("dateDiv");
+            if(militaryStatusId ==2){
+                dateDivElement.style.display="block"
+            }
+            else{
+                dateDivElement.style.display = "none"
+            }
+        }
+    </script>
+}

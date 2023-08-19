@@ -48,10 +48,13 @@ namespace AdvertisementApp.Business.DependencyResolvers.Microsoft
 
             services.AddTransient<IValidator<AppUserLoginDto>, AppUserLoginDtoValidator>();
 
+            services.AddTransient<IValidator<AdvertisementAppUserCreateDto>, AdvertisementAppUserCreateDtoValidator>();
+
             services.AddScoped<IProvidedServiceService, ProvidedServiceService>();
             services.AddScoped<IAdvertisementService, AdvertisementService>();
             services.AddScoped<IAppUserService, AppUserService>();
             services.AddScoped<IGenderService, GenderService>();
+            services.AddScoped<IAdvertisementAppUserService, AdvertisementAppUserService>();
 
             services.AddDbContext<AdvetisementContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("Server = GODSWHIP\\SQLEXPRESS; Database = AdvertisementDb; Trusted_Connection = True; TrustServerCertificate=True")));

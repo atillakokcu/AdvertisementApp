@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\cvFiles\" />
     <Folder Include="wwwroot\themes\startbootstrap-one-page-wonder-gh-pages\css\" />
     <Folder Include="wwwroot\themes\startbootstrap-one-page-wonder-gh-pages\js\" />
   </ItemGroup>
