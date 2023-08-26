@@ -5,13 +5,10 @@ using AdvertisementApp.Dto;
 using AdvertisementApp.Entities;
 using AdvertisimentApp;
 using AdvertisimentApp.Common;
+using AdvertisimentApp.Common.Enums;
 using AutoMapper;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdvertisementApp.Business.Services
 {
@@ -57,6 +54,30 @@ namespace AdvertisementApp.Business.Services
 
         }
 
+        public async Task<List<AdvertisementAppUserListDto>> GetList(AdvertisementAppUserStatusType type)
+        {
+            var query = _uow.GetRepository<AdvertisementAppUser>().GetQuery();
+
+            var list = await query.Include(x => x.Advertisement).Include(x => x.AdvertisementAppUserStatus).Include(x => x.MilitaryStatus).Include(x => x.AppUser).ThenInclude(x => x.Gender).Where(x => x.AdvertisementAppUserStatusId == (int)type).ToListAsync();
+
+            return _mapper.Map<List<AdvertisementAppUserListDto>>(list);
+        }
+
+        public async Task SetStatusAsync(int advertismentAppUserId, AdvertisementAppUserStatusType type)
+        {
+            //var unchanged = await _uow.GetRepository<AdvertisementAppUser>().FindAsync(advertismentAppUserId);
+            //var changed = await _uow.GetRepository<AdvertisementAppUser>().GetByFilterAsync(x => x.Id == advertismentAppUserId);
+            //_uow.GetRepository<AdvertisementAppUser>().Update(changed, unchanged);
+
+            //2.yontem
+            var query = _uow.GetRepository<AdvertisementAppUser>().GetQuery();
+            var entity = await query.SingleOrDefaultAsync(x => x.Id == advertismentAppUserId);
+            entity.AdvertisementAppUserStatusId = (int)type;
+
+
+
+            await _uow.SaveChangesAsync();
+        }
 
     }
 }

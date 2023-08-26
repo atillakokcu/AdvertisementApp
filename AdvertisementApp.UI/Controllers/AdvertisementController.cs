@@ -91,6 +91,24 @@ namespace AdvertisementApp.UI.Controllers
                 foreach (var error in response.ValidationErrors)
                 {
                     ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                    var userId = int.Parse((User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)).Value);
+                    var userResponse = await _userService.GetByIdAsync<AppUserListDto>(userId);
+
+                    ViewBag.Gender = userResponse.Data.GenderId;
+                    var items = Enum.GetValues(typeof(MilitaryStatusType)); // oluşturduğumuz enumları burada tanımladık
+                    var list = new List<MilitarySatusListDto>(); // enumları liste içine atmak için liste tanımladık
+
+                    foreach (int item in items)
+                    {
+                        list.Add(new MilitarySatusListDto
+                        {
+                            Id = item,
+                            Defination = Enum.GetName(typeof(MilitaryStatusType), item),
+                        });
+
+                    }
+
+                    ViewBag.MilitaryStatus = new SelectList(list, "Id", "Defination");
                 }
                 return View(model);
             }
@@ -100,6 +118,37 @@ namespace AdvertisementApp.UI.Controllers
             }
         }
 
+        [Authorize(Roles ="Admin")] // rolun içerisinde admin olan kişi buraya girebilsin
+        public async Task< IActionResult> List()
+        {
+
+          var list= await _advertisementAppUserService.GetList(AdvertisementAppUserStatusType.Başvurdu);
+
+            return View(list);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task< IActionResult> SetStatus(int advertismentAppUserId, AdvertisementAppUserStatusType type)
+        {
+           await _advertisementAppUserService.SetStatusAsync(advertismentAppUserId, type);
+            return RedirectToAction("List");
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ApprovedList()
+        {
+            var list = await _advertisementAppUserService.GetList(AdvertisementAppUserStatusType.Mülakat);
+
+            return View(list);
+
+        }[Authorize(Roles = "Admin")]
+        public async Task<IActionResult> RejectedList()
+        {
+            var list = await _advertisementAppUserService.GetList(AdvertisementAppUserStatusType.Olumsuz);
+
+            return View(list);
+
+        }
 
 
 

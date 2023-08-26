@@ -9,13 +9,11 @@ using System.Threading.Tasks;
 
 namespace AdvertisementApp.Business.Mappings.AutoMapper
 {
-    public class AdvertisementAppUserProfile : Profile
+    public class AdvertisementAppUserStatusProfile : Profile
     {
-        public AdvertisementAppUserProfile()
+        public AdvertisementAppUserStatusProfile()
         {
-               CreateMap<AdvertisementAppUserCreateDto, AdvertisementAppUser>().ReverseMap();
-            CreateMap<AdvertisementAppUserListDto, AdvertisementAppUser>().ReverseMap();
+                CreateMap<AdvertisementAppUserStatus,AdvertisementAppUserStatusListDto>().ReverseMap();
         }
-
     }
 }
